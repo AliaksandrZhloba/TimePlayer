@@ -262,10 +262,12 @@ namespace TimePlayer
 				if (e.Key == Key.Up)
 				{
 					volumeControl.Volume += VOLUME_STEP;
+					e.Handled = true;
 				}
 				else if (e.Key == Key.Down)
 				{
 					volumeControl.Volume -= VOLUME_STEP;
+					e.Handled = true;
 				}
 				else
 				{
@@ -274,14 +276,17 @@ namespace TimePlayer
 						if (e.Key == Key.Space || e.Key == Key.Enter)
 						{
 							ToggleVideoPlayer();
+							e.Handled = true;
 						}
 						else if (e.Key == Key.Left)
 						{
 							mePlayer.MoveBack(2);
+							e.Handled = true;
 						}
 						else if (e.Key == Key.Right)
 						{
 							mePlayer.MoveForward(2);
+							e.Handled = true;
 						}
 					}
 				}

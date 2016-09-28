@@ -57,9 +57,9 @@
 				</Style>
 			</Border.Style>
 		</Border>
-		<UCs:TimeSlider x:Name="timeSlider" Grid.Row="1" Margin="4" HorizontalAlignment="Stretch"
+		<UCs:TimeSlider x:Name="timeSlider" Grid.Row="1" Margin="4" HorizontalAlignment="Stretch" Focusable="False"
 					 IsEnabled="False" Value="{Binding ElementName=mePlayer, Path=Position, Mode=TwoWay}" />
-		<Grid Grid.Row="3" Margin="4">
+		<Grid Grid.Row="3" Margin="4" KeyboardNavigation.TabNavigation="Continue">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
@@ -67,11 +67,11 @@
 				<ColumnDefinition Width="Auto" />
 				<ColumnDefinition Width="Auto" />
 			</Grid.ColumnDefinitions>
-			<UCs:VideoControlButton Grid.Column="0" x:Name="btnVideoControl" Height="64" Width="48" Margin="8"
+			<UCs:VideoControlButton Grid.Column="0" x:Name="btnVideoControl" Height="64" Width="48" Margin="8" Focusable="False"
 							    IsEnabled="{Binding ElementName=mePlayer, Path=IsReady}"
 							    IsPlaying="{Binding ElementName=mePlayer, Path=IsPlaying}"
 							    Click="btnVideoControl_Clicked" />
-			<UCs:VolumeControl Grid.Column="1" x:Name="volumeControl" Width="128" VerticalAlignment="Center" Margin="8"
+			<UCs:VolumeControl Grid.Column="1" x:Name="volumeControl" Width="128" VerticalAlignment="Center" Margin="8" Focusable="False"
 						    Volume="{Binding ElementName=mePlayer, Path=Volume, Mode=OneWayToSource}" />
 			<GroupBox Grid.Column="2" Header="Parts">
 				<UCs:VideoPartsList x:Name="videoPartsList" />

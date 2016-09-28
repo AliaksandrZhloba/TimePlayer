@@ -65,7 +65,6 @@
     <Compile Include="Converters\TimeSpanToDoubleConverter.cs" />
     <Compile Include="Entity\ProgramData.cs" />
     <Compile Include="Entity\TimeRange.cs" />
-    <Compile Include="Helpers\DragDropManager.cs" />
     <Compile Include="Helpers\VisualParentHelper.cs" />
     <Compile Include="UserControls\Extensions\Masking.cs" />
     <Compile Include="UserControls\TimeSlider.cs" />
@@ -183,9 +182,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Versions.txt" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Drop.png" />

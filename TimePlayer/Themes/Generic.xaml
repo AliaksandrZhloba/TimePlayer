@@ -51,7 +51,8 @@
 								<ColumnDefinition />
 							</Grid.ColumnDefinitions>
 							<Image Grid.Column="0" Source="/Resources/Volume.png" SnapsToDevicePixels="True" Stretch="Uniform" Width="48" VerticalAlignment="Center" />
-							<Slider Grid.Column="1" Minimum="0" Maximum="1" SmallChange="0.05" LargeChange="0.2" Value="{Binding Volume, Mode=TwoWay}" VerticalAlignment="Center" />
+							<Slider Grid.Column="1" Minimum="0" Maximum="1" SmallChange="0.05" LargeChange="0.2" VerticalAlignment="Center" Focusable="{TemplateBinding Focusable}"
+								   Value="{Binding Volume, Mode=TwoWay}" />
 						</Grid>
 					</Border>
 				</ControlTemplate>
@@ -78,7 +79,7 @@
 					<Border Background="{TemplateBinding Background}"
 						   BorderBrush="{TemplateBinding BorderBrush}"
 						   BorderThickness="{TemplateBinding BorderThickness}">
-						<Button Style="{StaticResource FlatButton}" >
+						<Button Style="{StaticResource FlatButton}" Focusable="{TemplateBinding Focusable}" >
 							<ContentPresenter />
 						</Button>
 					</Border>
@@ -286,7 +287,7 @@
 							</Grid>
 
 							<Slider x:Name="PART_ValueSlider" Grid.ColumnSpan="5" TickPlacement="Both" TickFrequency="10"
-								   IsMoveToPointEnabled="True"
+								   IsMoveToPointEnabled="True" Focusable="{TemplateBinding Focusable}"
 								   Minimum="{TemplateBinding Minimum, Converter={StaticResource TimeSpanToDoubleConverter}}"
 								   Maximum="{TemplateBinding Maximum, Converter={StaticResource TimeSpanToDoubleConverter}}"
 								   IsSelectionRangeEnabled="True"
