@@ -76,8 +76,20 @@ namespace TimePlayer
 			string[] args = Environment.GetCommandLineArgs();
 			if (args.Length == 2)
 			{
-				string file = args[1];
-				OpenFile(file);
+				string progFile = args[0];
+				string argFile = args[1];
+				string dir = System.IO.Path.GetDirectoryName(argFile);
+
+				if (string.IsNullOrEmpty(dir))
+				{
+					dir = System.IO.Path.GetDirectoryName(progFile);
+					if (string.IsNullOrEmpty(dir))
+					{
+						return;
+					}
+					argFile = System.IO.Path.Combine(dir, argFile);
+				}
+				OpenFile(argFile);
 			}
 		}
 
