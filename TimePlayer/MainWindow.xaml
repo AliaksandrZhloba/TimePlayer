@@ -9,10 +9,6 @@
 	   PreviewMouseWheel="MainWindow_PreviewMouseWheel" PreviewKeyDown="MainWindow_PreviewKeyDown"
 	   Closing="MainWindow_Closing">
 
-	<Window.Resources>
-		<Duration x:Key="AnimationDuration">0:0:0.2</Duration>
-	</Window.Resources>
-
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition />

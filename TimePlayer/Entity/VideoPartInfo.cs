@@ -30,7 +30,7 @@ namespace TimePlayer.Entity
 
 		public VideoPartInfo Clone()
 		{
-			return new VideoPartInfo(TimeRange, Title);
+			return new VideoPartInfo(TimeRange.Clone(), Title);
 		}
 
 

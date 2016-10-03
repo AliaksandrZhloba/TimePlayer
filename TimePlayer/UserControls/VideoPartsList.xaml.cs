@@ -119,37 +119,6 @@ namespace TimePlayer.UserControls
 		}
 
 
-		private void spVideoParts_PreviewDragOver(object sender, DragEventArgs e)
-		{
-			/*VideoPartInfoViewModel partInfo = e.Data.GetData(typeof(VideoPartInfoViewModel)) as VideoPartInfoViewModel;
-			if (partInfo != null)
-			{
-				Point mp = e.GetPosition(icVideoParts);
-				Vector vect = new Vector(mp.X, mp.Y);
-
-				double min = double.MaxValue;
-				int index = -1;
-				UIElement element = null;
-
-				for (int i = 0; i < ItemsSource.Count; i++)
-				{
-					UIElement uiElement = (UIElement)icVideoParts.ItemContainerGenerator.ContainerFromIndex(i);
-					Vector offset = VisualTreeHelper.GetOffset(uiElement);
-
-					Vector delta = vect - offset;
-					if (delta.Length < min)
-					{
-						min = delta.Length;
-						index = i;
-						element = uiElement;
-					}
-				}
-
-				System.Diagnostics.Debug.WriteLine(index);
-			}*/
-		}
-
-
 		private void btnJumpToVideoPart_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
 			TextBox tbox = Keyboard.FocusedElement as TextBox;
@@ -160,11 +129,15 @@ namespace TimePlayer.UserControls
 				Keyboard.ClearFocus();							// remove keyboard focus
 			}
 
-			DependencyObject d = (DependencyObject)sender;
+			/*DependencyObject d = (DependencyObject)sender;
 			Button btn = Helpers.VisualParentHelper<Button>.GetVisualParent(d);
 
-			VideoPartInfoViewModel info = (VideoPartInfoViewModel)btn.DataContext;
-			info.JumpToVideoPartCommand.Execute(null);
+			btn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent, btn));*/
+		}
+
+		private void btnJumpToVideoPart_Click(object sender, RoutedEventArgs e)
+		{
+
 		}
 	}
 }

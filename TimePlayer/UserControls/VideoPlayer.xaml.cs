@@ -23,29 +23,6 @@ namespace TimePlayer.UserControls
 	/// </summary>
 	public partial class VideoPlayer : UserControl, INotifyPropertyChanged, IDisposable
 	{
-		/*public static readonly DependencyProperty
-			PositionProperty = DependencyProperty.Register("Position", typeof(TimeSpan), typeof(VideoPlayer), new PropertyMetadata(PositionPropertyChanged));
-
-		public TimeSpan Position
-		{
-			get { return (TimeSpan)GetValue(PositionProperty); }
-			set { SetValue(PositionProperty, value); }
-		}
-
-		private static void PositionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			VideoPlayer player = (VideoPlayer)d;
-			player.UpdatePosition();
-		}
-
-		private void UpdatePosition()
-		{
-			if (!_updatingPositionFromInternal)
-			{
-				mePlayer.Position = Position;
-			}
-		}*/
-
 		public TimeSpan Position
 		{
 			get { return mePlayer.Position; }
@@ -160,7 +137,7 @@ namespace TimePlayer.UserControls
 				{
 					while (!_cts.IsCancellationRequested)
 					{
-						if (IsPlaying)
+						//if (IsPlaying)
 						{
 							Dispatcher.Invoke((Action)(() =>
 							{
@@ -182,16 +159,6 @@ namespace TimePlayer.UserControls
 			{
 				PropertyChanged(this, new PropertyChangedEventArgs(property));
 			}
-		}
-
-		public void MoveBack(double secs)
-		{
-			mePlayer.Position -= TimeSpan.FromSeconds(secs);
-		}
-
-		public void MoveForward(double secs)
-		{
-			mePlayer.Position += TimeSpan.FromSeconds(secs);
 		}
 	}
 }

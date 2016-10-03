@@ -52,7 +52,7 @@ namespace TimePlayer
 					if (position >= _data.CurrentVideoPartInfo.TimeRange.ToTime)
 					{
 						mePlayer.Pause();
-						mePlayer.Position = _data.CurrentVideoPartInfo.TimeRange.FromTime;
+						mePlayer.Position = _data.CurrentVideoPartInfo.TimeRange.ToTime;
 					}
 				};
 
@@ -60,7 +60,7 @@ namespace TimePlayer
 				{
 					if (!_data.CurrentVideoPartInfo.TimeRange.Contains(value))
 					{
-						ActiveteNewVideoPart(_data.FullVideoPartViewModel);
+						ActiveteVideoPart(_data.FullVideoPartViewModel);
 					}
 				};
 
@@ -167,11 +167,11 @@ namespace TimePlayer
 					ObservableCollection<VideoPartInfoViewModel> vmodel = new ObservableCollection<VideoPartInfoViewModel>();
 					foreach (VideoPartInfo info in _data.VPListData.VideoPartInfos)
 					{
-						vmodel.Add(new VideoPartInfoViewModel(info, JumpCommandExecuted, DeleteCommandExecuted));
+						vmodel.Add(new VideoPartInfoViewModel(info, JumpCommandExecuted, RestartCommandExecuted, DeleteCommandExecuted));
 					}
 
 					VideoPartInfo fullInfo = new VideoPartInfo(new TimeRange(TimeSpan.FromSeconds(0), mePlayer.Duration), "Full");
-					VideoPartInfoViewModel fullVideModel = new VideoPartInfoViewModel(fullInfo, JumpCommandExecuted, DeleteCommandExecuted, isReadOnly: true);
+					VideoPartInfoViewModel fullVideModel = new VideoPartInfoViewModel(fullInfo, JumpCommandExecuted, RestartCommandExecuted, DeleteCommandExecuted, isReadOnly: true);
 
 					_data.VPListData.InsertFullInfo(fullInfo);
 					vmodel.Insert(0, fullVideModel);
@@ -214,20 +214,18 @@ namespace TimePlayer
 		{
 			if (_data.CurrentVideoPartVideoViewModel != infoViewModel)
 			{
-				ActiveteNewVideoPart(infoViewModel);
+				ActiveteVideoPart(infoViewModel);
 				mePlayer.Position = infoViewModel.VideoPartInfo.TimeRange.FromTime;
-			}
-			else
-			{
-				if (!IsDesignMode && !mePlayer.IsPlaying)
-				{
-					mePlayer.Position = infoViewModel.VideoPartInfo.TimeRange.FromTime;
-					mePlayer.Play();
-				}
 			}
 		}
 
-		private void ActiveteNewVideoPart(VideoPartInfoViewModel infoViewModel)
+		private void RestartCommandExecuted(VideoPartInfoViewModel infoViewModel)
+		{
+			mePlayer.Position = infoViewModel.VideoPartInfo.TimeRange.FromTime;
+		}
+
+
+		private void ActiveteVideoPart(VideoPartInfoViewModel infoViewModel)
 		{
 			if (_data.CurrentVideoPartVideoViewModel!= null)
 			{
@@ -292,12 +290,22 @@ namespace TimePlayer
 						}
 						else if (e.Key == Key.Left)
 						{
-							mePlayer.MoveBack(2);
+							TimeSpan newPosition = mePlayer.Position.Subtract(TimeSpan.FromSeconds(2));
+							if (newPosition < _data.CurrentVideoPartInfo.TimeRange.FromTime)
+							{
+								newPosition = _data.CurrentVideoPartInfo.TimeRange.FromTime;
+							}
+							mePlayer.Position = newPosition;
 							e.Handled = true;
 						}
 						else if (e.Key == Key.Right)
 						{
-							mePlayer.MoveForward(2);
+							TimeSpan newPosition = mePlayer.Position.Add(TimeSpan.FromSeconds(2));
+							if (newPosition > _data.CurrentVideoPartInfo.TimeRange.ToTime)
+							{
+								newPosition = _data.CurrentVideoPartInfo.TimeRange.ToTime;
+							}
+							mePlayer.Position = newPosition;
 							e.Handled = true;
 						}
 					}
@@ -318,6 +326,10 @@ namespace TimePlayer
 			}
 			else
 			{
+				if (mePlayer.Position == _data.CurrentVideoPartInfo.TimeRange.ToTime)
+				{
+					mePlayer.Position = _data.CurrentVideoPartInfo.TimeRange.FromTime;
+				}
 				mePlayer.Play();
 			}
 		}
@@ -335,13 +347,13 @@ namespace TimePlayer
 
 			VideoPartInfo fullCopy = _data.VPListData.VideoPartInfos[0].Clone();
 			_data.InfosCopy.Add(fullCopy);
-			_data.InfoModelsCopy.Add(new VideoPartInfoViewModel(fullCopy, JumpCommandExecuted, DeleteCommandExecuted, isReadOnly: true));
+			_data.InfoModelsCopy.Add(new VideoPartInfoViewModel(fullCopy, JumpCommandExecuted, RestartCommandExecuted, DeleteCommandExecuted, isReadOnly: true));
 
 			for (int i = 1; i < _data.VPListData.VideoPartInfos.Count; i++)
 			{
 				VideoPartInfo copy = _data.VPListData.VideoPartInfos[i].Clone();
 				_data.InfosCopy.Add(copy);
-				_data.InfoModelsCopy.Add(new VideoPartInfoViewModel(copy, JumpCommandExecuted, DeleteCommandExecuted));
+				_data.InfoModelsCopy.Add(new VideoPartInfoViewModel(copy, JumpCommandExecuted, RestartCommandExecuted, DeleteCommandExecuted));
 			}
 
 			SetDesignMode(true);
@@ -385,13 +397,13 @@ namespace TimePlayer
 		private void btnAddVideoPart_Click(object sender, RoutedEventArgs e)
 		{
 			VideoPartInfo newPartInfo = new VideoPartInfo(_data.FullVideoPartInfo.TimeRange.Clone(), string.Format("ex.{0}", _data.VPListData.VideoPartInfos.Count));
-			VideoPartInfoViewModel model = new VideoPartInfoViewModel(newPartInfo, JumpCommandExecuted, DeleteCommandExecuted);
+			VideoPartInfoViewModel model = new VideoPartInfoViewModel(newPartInfo, JumpCommandExecuted, RestartCommandExecuted, DeleteCommandExecuted);
 
 			_data.VPListData.VideoPartInfos.Add(newPartInfo);
 			videoPartsList.ItemsSource.Add(model);
 			videoPartsList.ScrollToRightEnd();
 
-			ActiveteNewVideoPart(model);
+			ActiveteVideoPart(model);
 		}
 	}
 }

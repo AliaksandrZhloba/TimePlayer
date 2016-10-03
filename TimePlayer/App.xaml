@@ -6,6 +6,8 @@
 
 	<Application.Resources>
 		<ResourceDictionary>
+			<Duration x:Key="AnimationDuration">0:0:0.2</Duration>
+			<KeyTime x:Key="AnimationKeyTime">0:0:0.2</KeyTime>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Themes/Generic.xaml"/>
 			</ResourceDictionary.MergedDictionaries>

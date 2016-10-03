@@ -7,7 +7,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace TimePlayer.UserControls.Extensions
+
+namespace TimePlayer.UserControls.Behaviour
 {
 	public static class Masking
 	{

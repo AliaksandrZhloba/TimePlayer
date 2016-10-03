@@ -3,7 +3,7 @@
 		   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		   xmlns:UCs="clr-namespace:TimePlayer.UserControls"
 		   xmlns:Cs="clr-namespace:TimePlayer.Converters"
-		   xmlns:Exts="clr-namespace:TimePlayer.UserControls.Extensions"
+		   xmlns:Behaviour="clr-namespace:TimePlayer.UserControls.Behaviour"
 		   DataContext="{Binding RelativeSource={RelativeSource Self}}">
 
 	<UserControl.Resources>
@@ -23,8 +23,6 @@
 		</Style>
 
 		<Cs:TimeRangeToStringConverter x:Key="TimeRangeToStringConverter" />
-		<Duration x:Key="AnimationDuration">0:0:0.2</Duration>
-		<KeyTime x:Key="AnimationKeyTime">0:0:0.2</KeyTime>
 	</UserControl.Resources>
 
 	<Grid>
@@ -35,8 +33,7 @@
 		</Grid.ColumnDefinitions>
 		<RepeatButton Grid.Column="0" Width="16" Content="" FontFamily="Webdings" Click="ScrollUp" Style="{StaticResource TransparentRepeatButton}" />
 		<ScrollViewer Grid.Column="1" x:Name="scroll" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-			<StackPanel x:Name="spVideoParts" Orientation="Horizontal" AllowDrop="True"
-					  PreviewDrop="spVideoParts_PreviewDrop" PreviewDragOver="spVideoParts_PreviewDragOver">
+			<StackPanel x:Name="spVideoParts" Orientation="Horizontal" AllowDrop="True" PreviewDrop="spVideoParts_PreviewDrop">
 				<ItemsControl x:Name="icVideoParts" ItemsSource="{Binding ItemsSource}">
 					<ItemsControl.ItemsPanel>
 						<ItemsPanelTemplate>
@@ -49,8 +46,26 @@
 								<Border.Effect>
 									<DropShadowEffect x:Name="effect" BlurRadius="5" ShadowDepth="1" Direction="270" Color="#CCCCCC" />
 								</Border.Effect>
-								<Button x:Name="btnJumpToVideoPart" Focusable="False" Background="White" BorderThickness="0"
-									   Command="{Binding JumpToVideoPartCommand}" HorizontalContentAlignment="Center" PreviewMouseLeftButtonDown="btnJumpToVideoPart_PreviewMouseLeftButtonDown">
+								<Button x:Name="btnJumpToVideoPart" Focusable="False" Background="White" BorderThickness="0" HorizontalContentAlignment="Center"
+									   Behaviour:ButtonCommandBinder.PreviewMouseLeftButtonDownCommand="{Binding JumpToVideoPartCommand}"
+									   Behaviour:ButtonCommandBinder.MouseDoubleClickCommand="{Binding RestartVideoPartCommand}"
+									   PreviewMouseLeftButtonDown="btnJumpToVideoPart_PreviewMouseLeftButtonDown" Click="btnJumpToVideoPart_Click">
+									<Button.ToolTip>
+										<StackPanel Orientation="Vertical">
+											<TextBlock Margin="1">
+												<TextBlock.Inlines>
+													<Run FontWeight="Bold" Text="Click" />
+													<Run Text=" to jump" />
+												</TextBlock.Inlines>
+											</TextBlock>
+											<TextBlock Margin="1">
+												<TextBlock.Inlines>
+													<Run FontWeight="Bold" Text="Double click" />
+													<Run Text="to restart video" />
+												</TextBlock.Inlines>
+											</TextBlock>
+										</StackPanel>
+									</Button.ToolTip>
 									<Grid Margin="2">
 										<Grid.ColumnDefinitions>
 											<ColumnDefinition Width="Auto" />
@@ -92,7 +107,7 @@
 													  Cursor="Hand" />
 											</Button>
 											<TextBox Grid.Row="0" Grid.Column="1" Margin="2,3,2,1" Padding="0" Height="20"
-												    Exts:Masking.Mask="\d{2,}:\d{2,} - \d{2,}:\d{2,}">
+												    Behaviour:Masking.Mask="\d{2,}:\d{2,} - \d{2,}:\d{2,}">
 												<TextBox.Text>
 													<MultiBinding Converter="{StaticResource TimeRangeToStringConverter}">
 														<Binding Path="FromTime" />
@@ -117,6 +132,9 @@
 										<Condition Binding="{Binding IsReadOnly}" Value="False" />
 										<Condition Binding="{Binding DesignMode, RelativeSource={RelativeSource AncestorType={x:Type UCs:VideoPartsList}}}" Value="True" />
 									</MultiDataTrigger.Conditions>
+									<MultiDataTrigger.Setters>
+										<Setter TargetName="btnJumpToVideoPart" Property="ToolTip" Value="{x:Null}" />
+									</MultiDataTrigger.Setters>
 									<MultiDataTrigger.EnterActions>
 										<BeginStoryboard>
 											<Storyboard>

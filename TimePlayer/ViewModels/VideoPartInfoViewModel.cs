@@ -54,6 +54,11 @@ namespace TimePlayer.ViewModels
 			private set;
 		}
 
+		public RestartVideoPartCommand RestartVideoPartCommand
+		{
+			get;
+			private set;
+		}
 
 		public DeleteVideoPartCommand DeleteVideoPartCommand
 		{
@@ -107,7 +112,7 @@ namespace TimePlayer.ViewModels
 		}
 
 
-		public VideoPartInfoViewModel(VideoPartInfo info, Action<VideoPartInfoViewModel> jumpCommandExecuted, Action<VideoPartInfoViewModel> deleteVideoInfoCommand, bool isReadOnly = false)
+		public VideoPartInfoViewModel(VideoPartInfo info, Action<VideoPartInfoViewModel> jumpCommandExecuted, Action<VideoPartInfoViewModel> restartCommandExecuted, Action<VideoPartInfoViewModel> deleteVideoInfoCommand, bool isReadOnly = false)
 		{
 			IsActive = false;
 			IsDragging = false;
@@ -116,6 +121,7 @@ namespace TimePlayer.ViewModels
 			VideoPartInfo = info;
 
 			JumpToVideoPartCommand = new JumpToVideoPartCommand(() => jumpCommandExecuted(this));
+			RestartVideoPartCommand = new RestartVideoPartCommand(() => restartCommandExecuted(this));
 			DeleteVideoPartCommand = new DeleteVideoPartCommand(() => deleteVideoInfoCommand(this));
 		}
 	}
