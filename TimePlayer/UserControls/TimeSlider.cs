@@ -97,9 +97,9 @@ namespace TimePlayer.UserControls
 			TimeSlider slider = (TimeSlider)d;
 			if (!slider._rangeStartShifting)
 			{
-				slider.rangeStartSlider.Value = slider.RangeStart.TotalSeconds;
-				/*DoubleAnimation daRangeStart = new DoubleAnimation(slider.RangeStart.TotalSeconds, slider._animationDuration);
-				slider.rangeStartSlider.BeginAnimation(Slider.ValueProperty, daRangeStart);*/
+				//slider.rangeStartSlider.Value = slider.RangeStart.TotalSeconds;
+				DoubleAnimation daRangeStart = new DoubleAnimation(slider.RangeStart.TotalSeconds, slider._animationDuration);
+				slider.rangeStartSlider.BeginAnimation(Slider.ValueProperty, daRangeStart);
 			}
 		}
 
@@ -108,9 +108,9 @@ namespace TimePlayer.UserControls
 			TimeSlider slider = (TimeSlider)d;
 			if (!slider._rangeEndShifting)
 			{
-				slider.rangeEndSlider.Value = slider.RangeEnd.TotalSeconds;
-				/*DoubleAnimation daRangeEnd = new DoubleAnimation(slider.RangeEnd.TotalSeconds, slider._animationDuration);
-				slider.rangeEndSlider.BeginAnimation(Slider.ValueProperty, daRangeEnd);*/
+				//slider.rangeEndSlider.Value = slider.RangeEnd.TotalSeconds;
+				DoubleAnimation daRangeEnd = new DoubleAnimation(slider.RangeEnd.TotalSeconds, slider._animationDuration);
+				slider.rangeEndSlider.BeginAnimation(Slider.ValueProperty, daRangeEnd);
 			}
 		}
 

@@ -6,6 +6,7 @@
 
 	<Application.Resources>
 		<ResourceDictionary>
+			<Duration x:Key="ButtonClickEffectAnimationDuration">0:0:0.1</Duration>
 			<Duration x:Key="AnimationDuration">0:0:0.2</Duration>
 			<KeyTime x:Key="AnimationKeyTime">0:0:0.2</KeyTime>
 			<ResourceDictionary.MergedDictionaries>

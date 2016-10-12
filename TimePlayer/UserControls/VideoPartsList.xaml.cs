@@ -128,16 +128,6 @@ namespace TimePlayer.UserControls
 				FocusManager.SetFocusedElement(scope, null);			// remove logical focus
 				Keyboard.ClearFocus();							// remove keyboard focus
 			}
-
-			/*DependencyObject d = (DependencyObject)sender;
-			Button btn = Helpers.VisualParentHelper<Button>.GetVisualParent(d);
-
-			btn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent, btn));*/
-		}
-
-		private void btnJumpToVideoPart_Click(object sender, RoutedEventArgs e)
-		{
-
 		}
 	}
 }

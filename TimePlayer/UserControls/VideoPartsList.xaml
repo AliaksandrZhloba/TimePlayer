@@ -49,7 +49,7 @@
 								<Button x:Name="btnJumpToVideoPart" Focusable="False" Background="White" BorderThickness="0" HorizontalContentAlignment="Center"
 									   Behaviour:ButtonCommandBinder.PreviewMouseLeftButtonDownCommand="{Binding JumpToVideoPartCommand}"
 									   Behaviour:ButtonCommandBinder.MouseDoubleClickCommand="{Binding RestartVideoPartCommand}"
-									   PreviewMouseLeftButtonDown="btnJumpToVideoPart_PreviewMouseLeftButtonDown" Click="btnJumpToVideoPart_Click">
+									   PreviewMouseLeftButtonDown="btnJumpToVideoPart_PreviewMouseLeftButtonDown">
 									<Button.ToolTip>
 										<StackPanel Orientation="Vertical">
 											<TextBlock Margin="1">
@@ -118,6 +118,61 @@
 											<TextBox Grid.Row="1" Grid.Column="1" Margin="2,1,2,3" Padding="0" Height="20" Text="{Binding Title}" TextWrapping="NoWrap" FontWeight="Bold" />
 										</Grid>
 									</Grid>
+									<Button.RenderTransform>
+										<ScaleTransform ScaleX="1.0" ScaleY="1.0" />
+									</Button.RenderTransform>
+									<Button.Style>
+										<Style TargetType="{x:Type Button}">
+											<Setter Property="RenderTransformOrigin" Value="0.5, 0.5"/>
+											<Style.Triggers>
+												<Trigger Property="Button.IsPressed" Value="True">
+													<Trigger.EnterActions>
+														<BeginStoryboard>
+															<Storyboard>
+																<DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="0.96" Duration="{StaticResource ButtonClickEffectAnimationDuration}" />
+																<DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="0.96" Duration="{StaticResource ButtonClickEffectAnimationDuration}" />
+															</Storyboard>
+														</BeginStoryboard>
+													</Trigger.EnterActions>
+													<Trigger.ExitActions>
+														<BeginStoryboard>
+															<Storyboard>
+																<DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1.0" Duration="{StaticResource ButtonClickEffectAnimationDuration}" />
+																<DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1.0" Duration="{StaticResource ButtonClickEffectAnimationDuration}" />
+															</Storyboard>
+														</BeginStoryboard>
+													</Trigger.ExitActions>
+												</Trigger>
+												<!--<EventTrigger RoutedEvent="Button.MouseEnter">
+													<EventTrigger.EnterActions>
+														
+													</EventTrigger.EnterActions>
+													<EventTrigger.ExitActions>
+														<BeginStoryboard>
+															<Storyboard>
+																<DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="1.0" Duration="0:0:0.2" />
+																<DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)" To="1.0" Duration="0:0:0.2" />
+															</Storyboard>
+														</BeginStoryboard>
+													</EventTrigger.ExitActions>
+												</EventTrigger>-->
+											</Style.Triggers>
+										</Style>
+										<!--<EventTrigger RoutedEvent="MouseDown">
+											<BeginStoryboard>
+												<Storyboard>
+													<DoubleAnimation Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)" To="0.9" Duration="0:0:0.2" />
+												</Storyboard>
+											</BeginStoryboard>
+										</EventTrigger>
+										<EventTrigger RoutedEvent="MouseUp">
+											<BeginStoryboard>
+												<Storyboard>
+													<DoubleAnimation Storyboard.TargetProperty="(Button.RenderTransform).(ScaleTransform.ScaleX)" To="1.1" Duration="0:0:0.2" />
+												</Storyboard>
+											</BeginStoryboard>
+										</EventTrigger>-->
+									</Button.Style>
 								</Button>
 							</Border>
 
